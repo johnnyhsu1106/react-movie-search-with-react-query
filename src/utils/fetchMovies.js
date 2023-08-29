@@ -6,6 +6,7 @@ const fetchMovieData = async (query, currPageNumber) => {
   if (query.trim() === '' || currPageNumber === null) {
     return {};
   }
+
   const options  = {
     method: 'GET',
     headers: {
@@ -16,6 +17,7 @@ const fetchMovieData = async (query, currPageNumber) => {
 
   const res = await fetch(`${API_ENDPOINT}?query=${query}&page=${currPageNumber}`, options);
   const data = await res.json();
+
   return data;
 }
 

@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useEffect } from 'react';
+import { useState, createContext, useContext, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchMovieData } from '../utils/fetchMovies';
 
@@ -15,6 +15,7 @@ const MovieSearchProvider = ({ children }) => {
 
   const [query, setQuery] = useState('');
   const [currPageNum, setCurrPageNum] = useState(null);
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ['movies', query, currPageNum],
     queryFn: async () => { return fetchMovieData(query, currPageNum)}
@@ -23,9 +24,8 @@ const MovieSearchProvider = ({ children }) => {
   const numOfPages = data?.total_pages || 0;
   const numOfResults = data?.total_results || 0;
   const movies = data?.results?.map((result) => { return result }) || [];
-
-  const currBucket = Math.floor((currPageNum - 1) / PAGE_PER_BUCKET);
-  const lastBucket = numOfPages !== 0 ? Math.floor((numOfPages - 1) / PAGE_PER_BUCKET) : 0;
+  const currBucket = currPageNum !== null ? Math.floor((currPageNum - 1) / PAGE_PER_BUCKET) : null;
+  const lastBucket = numOfPages !== 0 ? Math.floor((numOfPages - 1) / PAGE_PER_BUCKET) : null;
 
 
   const handlePrevQueryCancel = () => {
@@ -38,25 +38,25 @@ const MovieSearchProvider = ({ children }) => {
     setCurrPageNum(1);
   };
 
-  const handlePageNumClick = (pageNumber) => {
+  const handlePageNumClick = (pageNum) => {
     handlePrevQueryCancel();
-    setCurrPageNum(pageNumber);
+    setCurrPageNum(pageNum);
   };
 
-  const handlePrevClick = (decrement) => {
+  const handlePrevBtnClick = () => {
     handlePrevQueryCancel();
-    setCurrPageNum((prevPageNumber) => {
-      return prevPageNumber + decrement <= 0 ? 0 : prevPageNumber + decrement;
+    setCurrPageNum((prevPageNum) => {
+      return prevPageNum -1 <= 0 ? 0 : prevPageNum - 1;
     });
   };
 
-  const handleNextClick = (increment) => {
+  const handleNextBtnClick = () => {
     handlePrevQueryCancel();
-    setCurrPageNum((prevPageNumber) => {
-      return prevPageNumber + increment >= numOfPages ? numOfPages : prevPageNumber + increment;
+    setCurrPageNum((prevpageNum) => {
+      return prevpageNum + 1 >= numOfPages ? numOfPages : prevpageNum + 1;
     });
   };
-  
+
 
   const context = {
     query,
@@ -64,13 +64,14 @@ const MovieSearchProvider = ({ children }) => {
     currPageNum,
     currBucket,
     lastBucket,
+    PAGE_PER_BUCKET,
     numOfPages,
     numOfResults,
     isLoading,
     isError,
     handleSearchQuery,
-    handlePrevClick,
-    handleNextClick,
+    handlePrevBtnClick,
+    handleNextBtnClick,
     handlePageNumClick
   };
 

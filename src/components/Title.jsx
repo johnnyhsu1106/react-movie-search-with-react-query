@@ -1,16 +1,17 @@
+import { useState } from 'react';
 import { useMovieSearchContext } from '../context/MovieSearchContext';
 
 
 const Title = () => {
   const { 
     query,
-    numOfResults
+    numOfResults, 
   } = useMovieSearchContext();
 
   if (query.trim() === '' && numOfResults === 0) {
     return null;
   }
-  
+
   return (
     <>
       <h2>{query}</h2>

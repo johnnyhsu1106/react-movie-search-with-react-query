@@ -1,7 +1,7 @@
 import Container from './components/Container/Container';
 import SearchBar from './components/SearchBar/SearchBar';
 import Title from './components/Title';
-import SearchResults from './components/SearchResults/SearchResults';
+import Movies from './components/Movies/Movies';
 import Pagination from './components/Pagination/Pagination';
 import { MovieSearchProvider } from './context/MovieSearchContext.jsx'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -18,7 +18,7 @@ const App = () => {
           <SearchBar />
           <Title />
           <Pagination />
-          <SearchResults />
+          <Movies />
         </Container>
       </MovieSearchProvider>
     </QueryClientProvider>

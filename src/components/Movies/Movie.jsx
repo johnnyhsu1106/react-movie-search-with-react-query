@@ -1,4 +1,4 @@
-import style from './SearchResults.module.css';
+import style from './Movies.module.css';
 import notAvailableImage from '/images/no_image_available.jpg';
 const BACKDROP_BASE_URL = 'https://www.themoviedb.org/t/p/original';
 
