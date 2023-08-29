@@ -43,17 +43,23 @@ const MovieSearchProvider = ({ children }) => {
     setCurrPageNum(pageNum);
   };
 
-  const handlePrevBtnClick = () => {
-    handlePrevQueryCancel();
-    setCurrPageNum((prevPageNum) => {
-      return prevPageNum -1 <= 0 ? 0 : prevPageNum - 1;
-    });
-  };
+  // const handlePrevBtnClick = () => {
+  //   handlePrevQueryCancel();
+  //   setCurrPageNum((prevPageNum) => {
+  //     return prevPageNum -1 <= 0 ? 0 : prevPageNum - 1;
+  //   });
+  // };
 
-  const handleNextBtnClick = () => {
-    handlePrevQueryCancel();
+  // const handleNextBtnClick = () => {
+  //   handlePrevQueryCancel();
+  //   setCurrPageNum((prevpageNum) => {
+  //     return prevpageNum + 1 >= numOfPages ? numOfPages : prevpageNum + 1;
+  //   });
+  // };
+
+  const handleButtonClick = (increment, lastpageNum) => {
     setCurrPageNum((prevpageNum) => {
-      return prevpageNum + 1 >= numOfPages ? numOfPages : prevpageNum + 1;
+      return prevpageNum + increment === lastpageNum ? lastpageNum : prevpageNum + increment;
     });
   };
 
@@ -70,8 +76,7 @@ const MovieSearchProvider = ({ children }) => {
     isError,
     PAGE_PER_BUCKET,
     handleSearchQuery,
-    handlePrevBtnClick,
-    handleNextBtnClick,
+    handleButtonClick,
     handlePageNumClick
   };
 
