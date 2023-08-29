@@ -47,11 +47,12 @@ const PageLinks = () => {
         {currBucket !== 0 && 
         <NavButton text='prev' onNavButtonClick={() => {handlePageNumClick(prevBucketPageNum)}} />
         }
+
         <PageNums />
+
         {currBucket !== lastBucket && 
         <NavButton text='next' onNavButtonClick={() => {handlePageNumClick(nextBucketPageNum)}} />
         }
-
       </div>
       <div className={style['page-location']}> { currPageNum } / {numOfPages} pages </div>
     </>
