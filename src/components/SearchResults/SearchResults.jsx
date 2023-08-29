@@ -1,6 +1,5 @@
 import { useMovieSearchContext } from '../../context/MovieSearchContext';
 import MovieList from './MovieList'
-import SearchResultsTitle from './SearchResultsTitle';
 import Loading from '../Loading';
 import Error from '../Error';
 
@@ -19,11 +18,7 @@ const SearchResults = () => {
   }
 
   return (
-    <>
-      <SearchResultsTitle />
-      <MovieList />
-    </>
-    
+    <MovieList />
   )
 }
 

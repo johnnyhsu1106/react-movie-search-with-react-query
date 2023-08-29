@@ -1,21 +1,33 @@
-import React from 'react'
+import { useMemo, useState } from 'react';
 import { useMovieSearchContext } from '../../context/MovieSearchContext';
 import style from './Pagination.module.css';
+
+const PAGE_PER_BUCKET = 10;
 
 
 const PageNums = () => {
   const { 
-    pageNumber,
+    currPageNum,
+    currBucket,
     numOfPages,
-    numOfResults,
     handlePageNumClick 
   } = useMovieSearchContext();
 
-  const PageNumLinks = () => {
-    const PageNums = [];
 
-    for (let pageNum = 1; pageNum <= numOfPages; pageNum++) {
-      const activePage = pageNum === pageNumber ? style.active : '';
+  const {startPageNum, endPageNum} = useMemo(() => {
+    const startPageNum = currBucket * PAGE_PER_BUCKET + 1;
+    const endPageNum = (currBucket + 1) * PAGE_PER_BUCKET > numOfPages ? numOfPages : (currBucket + 1) * PAGE_PER_BUCKET;
+  
+    return {startPageNum, endPageNum}
+    
+  }, [currBucket, numOfPages]);
+
+    
+  const PageNumsComponent = () => {
+    const PageNums = [];
+    for (let pageNum = startPageNum; pageNum <= endPageNum; pageNum++) {
+      const activePage = pageNum === currPageNum ? style.active : '';
+  
       PageNums.push(
         <span
           className={`${style['page-number']} ${activePage}`}
@@ -26,21 +38,12 @@ const PageNums = () => {
         </span>
       );
     }
-    return PageNums; 
-  };
-
-  if (numOfResults === null) {
-    return null;
+    return PageNums;
   }
 
-  return (
-    <>
-      <div className={style['page-numbers']}>
-        <PageNumLinks/>
-      </div>
-      <div className={style['page-location']}> { pageNumber } / {numOfPages} pages </div>
-    </>
+  return ( 
+    <PageNumsComponent />    
   )
 }
 
-export default PageNums;
+export default PageNums

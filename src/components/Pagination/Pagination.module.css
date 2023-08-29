@@ -6,8 +6,8 @@
 
 .btn {
   margin: 10px auto;
-  padding: 5px;
-  width: 100px;
+  padding: 10px 20px;
+  width: auto;
   font-size: 18px;
   background-color: #fff;
   color: #333;
@@ -27,6 +27,9 @@
   gap: 20px;
   flex-wrap: wrap;
   cursor: pointer;
+}
+.page-number {
+  width: 25px;
 }
 
 .page-number.active {

@@ -1,8 +1,8 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchMovieData } from '../utils/fetchMovies';
 
-
+const PAGE_PER_BUCKET = 10;
 const MovieSearchContext = createContext({});
 
 const useMovieSearchContext = () => {
@@ -12,17 +12,21 @@ const useMovieSearchContext = () => {
 
 const MovieSearchProvider = ({ children }) => {
   const queryClient = useQueryClient();
-  const [query, setQuery] = useState('');
-  const [pageNumber, setPageNumber] = useState(1);
 
-  const { 
-    data, 
-    isLoading, 
-    isError 
-  } = useQuery({
-    queryKey: ['movies', query, pageNumber],
-    queryFn: async () => { return fetchMovieData(query, pageNumber)}
+  const [query, setQuery] = useState('');
+  const [currPageNum, setCurrPageNum] = useState(null);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['movies', query, currPageNum],
+    queryFn: async () => { return fetchMovieData(query, currPageNum)}
   });
+
+  const numOfPages = data?.total_pages || 0;
+  const numOfResults = data?.total_results || 0;
+  const movies = data?.results?.map((result) => { return result }) || [];
+
+  const currBucket = Math.floor((currPageNum - 1) / PAGE_PER_BUCKET);
+  const lastBucket = numOfPages !== 0 ? Math.floor((numOfPages - 1) / PAGE_PER_BUCKET) : 0;
+
 
   const handlePrevQueryCancel = () => {
     queryClient.cancelQueries({ queryKey: ['movies'] })
@@ -31,31 +35,42 @@ const MovieSearchProvider = ({ children }) => {
   const handleSearchQuery = (query) => {
     handlePrevQueryCancel();
     setQuery(query);
-    setPageNumber(1);
+    setCurrPageNum(1);
   };
 
   const handlePageNumClick = (pageNumber) => {
     handlePrevQueryCancel();
-    setPageNumber(pageNumber);
+    setCurrPageNum(pageNumber);
   };
 
-  const handleButtonClick = (increment, lastPageNumber) => {
+  const handlePrevClick = (decrement) => {
     handlePrevQueryCancel();
-    setPageNumber((prevPageNumber) => {
-      return prevPageNumber + increment === lastPageNumber ? lastPageNumber : prevPageNumber + increment;
+    setCurrPageNum((prevPageNumber) => {
+      return prevPageNumber + decrement <= 0 ? 0 : prevPageNumber + decrement;
     });
   };
 
+  const handleNextClick = (increment) => {
+    handlePrevQueryCancel();
+    setCurrPageNum((prevPageNumber) => {
+      return prevPageNumber + increment >= numOfPages ? numOfPages : prevPageNumber + increment;
+    });
+  };
+  
+
   const context = {
     query,
-    movies: data?.results.map((result) => { return result }) || [],
-    pageNumber,
-    numOfPages: data?.total_pages,
-    numOfResults: data?.total_results,
+    movies,
+    currPageNum,
+    currBucket,
+    lastBucket,
+    numOfPages,
+    numOfResults,
     isLoading,
     isError,
     handleSearchQuery,
-    handleButtonClick,
+    handlePrevClick,
+    handleNextClick,
     handlePageNumClick
   };
 
