@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useMemo } from 'react';
+import { useState, createContext, useContext, useMemo, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchMovieData } from '../utils/fetchMovies';
 
@@ -21,12 +21,15 @@ const MovieSearchProvider = ({ children }) => {
     queryFn: async () => { return fetchMovieData(query, currPageNum)}
   });
 
-  const numOfPages = data?.total_pages || 0;
-  const numOfResults = data?.total_results || 0;
+  const numOfPages = data?.total_pages;
+  const numOfResults = data?.total_results;
   const movies = data?.results?.map((result) => { return result }) || [];
   const currBucket = currPageNum !== null ? Math.floor((currPageNum - 1) / PAGE_PER_BUCKET) : null;
   const lastBucket = numOfPages !== 0 ? Math.floor((numOfPages - 1) / PAGE_PER_BUCKET) : null;
 
+  useEffect(() => {
+    console.log(query);
+  }, [query])
 
   const handlePrevQueryCancel = () => {
     queryClient.cancelQueries({ queryKey: ['movies'] })
@@ -42,20 +45,6 @@ const MovieSearchProvider = ({ children }) => {
     handlePrevQueryCancel();
     setCurrPageNum(pageNum);
   };
-
-  // const handlePrevBtnClick = () => {
-  //   handlePrevQueryCancel();
-  //   setCurrPageNum((prevPageNum) => {
-  //     return prevPageNum -1 <= 0 ? 0 : prevPageNum - 1;
-  //   });
-  // };
-
-  // const handleNextBtnClick = () => {
-  //   handlePrevQueryCancel();
-  //   setCurrPageNum((prevpageNum) => {
-  //     return prevpageNum + 1 >= numOfPages ? numOfPages : prevpageNum + 1;
-  //   });
-  // };
 
   const handleButtonClick = (increment, lastpageNum) => {
     setCurrPageNum((prevpageNum) => {

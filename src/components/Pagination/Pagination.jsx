@@ -1,5 +1,5 @@
 import { useMovieSearchContext } from '../../context/MovieSearchContext';
-import  ControlButton from './ControlButton';
+import  NavButton from './NavButton';
 import PageLinks from './PageLinks';
 import style from './Pagination.module.css';
 
@@ -21,13 +21,13 @@ const Pagination = () => {
       <PageLinks />
       <div className={style['nav-btns']}>
         {currPageNum > 1 && 
-          <ControlButton
+          <NavButton
             text='Prev Page' 
             onClickButton={() => { handleButtonClick(-1, 0) }} 
           />
         }
         {currPageNum < numOfPages && 
-          <ControlButton
+          <NavButton
             text='Next Page' 
             onClickButton={() => { handleButtonClick(1, numOfPages) }} 
           />}

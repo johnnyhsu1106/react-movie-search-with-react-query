@@ -1,12 +1,13 @@
-import React from 'react'
+import style from './Pagination.module.css'
 
-const NavButton = ({
+
+const ControlButton = ( { 
   text,
-  onNavButtonClick,
+  onClickButton  
 }) => {
   return (
-    <span onClick={onNavButtonClick}> {text} ... </span>
+    <button className={style.btn} onClick={onClickButton}>{text}</button>
   )
 }
 
-export default NavButton
+export default ControlButton;

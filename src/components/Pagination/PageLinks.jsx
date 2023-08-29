@@ -1,4 +1,4 @@
-import NavButton from './NavButton';
+import NavLink from './NavLink';
 import { useMovieSearchContext } from '../../context/MovieSearchContext';
 import style from './Pagination.module.css';
 
@@ -45,16 +45,16 @@ const PageLinks = () => {
     <>
       <div className={style['page-numbers']}>
         {currBucket !== 0 && 
-        <NavButton text='prev' onNavButtonClick={() => {handlePageNumClick(prevBucketPageNum)}} />
+        <NavLink text='prev' onNavLinkClick={() => {handlePageNumClick(prevBucketPageNum)}} />
         }
 
         <PageNums />
 
         {currBucket !== lastBucket && 
-        <NavButton text='next' onNavButtonClick={() => {handlePageNumClick(nextBucketPageNum)}} />
+        <NavLink text='next' onNavLinkClick={() => {handlePageNumClick(nextBucketPageNum)}} />
         }
       </div>
-      <div className={style['page-location']}> { currPageNum } / {numOfPages} pages </div>
+      <div className={style['page-location']}> {currPageNum} / {numOfPages} pages </div>
     </>
   )
 }
