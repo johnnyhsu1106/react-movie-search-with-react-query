@@ -1,7 +1,7 @@
 import style from './Pagination.module.css'
 
 
-const ControlButton = ( { 
+const NavButton = ( { 
   text,
   onClickButton  
 }) => {
@@ -10,4 +10,4 @@ const ControlButton = ( {
   )
 }
 
-export default ControlButton;
+export default NavButton;

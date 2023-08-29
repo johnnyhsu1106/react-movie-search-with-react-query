@@ -9,7 +9,7 @@ const Pagination = () => {
     movies,
     currPageNum,
     numOfPages,
-    handleButtonClick
+    handleNavButtonClick
   } = useMovieSearchContext();
 
   if (movies.length === 0) {
@@ -23,13 +23,13 @@ const Pagination = () => {
         {currPageNum > 1 && 
           <NavButton
             text='Prev Page' 
-            onClickButton={() => { handleButtonClick(-1, 0) }} 
+            onClickButton={() => { handleNavButtonClick(-1, 0) }} 
           />
         }
         {currPageNum < numOfPages && 
           <NavButton
             text='Next Page' 
-            onClickButton={() => { handleButtonClick(1, numOfPages) }} 
+            onClickButton={() => { handleNavButtonClick(1, numOfPages) }} 
           />}
       </div>
     </>

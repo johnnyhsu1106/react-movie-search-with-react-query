@@ -46,7 +46,7 @@ const MovieSearchProvider = ({ children }) => {
     setCurrPageNum(pageNum);
   };
 
-  const handleButtonClick = (increment, lastpageNum) => {
+  const handleNavButtonClick = (increment, lastpageNum) => {
     setCurrPageNum((prevpageNum) => {
       return prevpageNum + increment === lastpageNum ? lastpageNum : prevpageNum + increment;
     });
@@ -65,7 +65,7 @@ const MovieSearchProvider = ({ children }) => {
     isError,
     PAGE_PER_BUCKET,
     handleSearchQuery,
-    handleButtonClick,
+    handleNavButtonClick,
     handlePageNumClick
   };
 
