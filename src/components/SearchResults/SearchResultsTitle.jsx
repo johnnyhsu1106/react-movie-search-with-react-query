@@ -6,7 +6,7 @@ const SearchResultsTitle = () => {
     numOfResults
   } = useMovieSearchContext();
 
-  if (numOfResults === null) {
+  if (!numOfResults) {
     return null;
   }
   

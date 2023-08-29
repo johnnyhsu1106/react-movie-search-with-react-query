@@ -7,14 +7,14 @@ import Error from '../Error';
 const SearchResults = () => {
   const {
     isLoading,
-    hasError
+    isError
   } = useMovieSearchContext();
 
   if (isLoading) {
     return <Loading />;
   } 
   
-  if (hasError) {
+  if (isError) {
     return <Error />
   }
 
