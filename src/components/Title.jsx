@@ -7,7 +7,7 @@ const Title = () => {
     numOfResults
   } = useMovieSearchContext();
 
-  if (query === '' && numOfResults === 0) {
+  if (query.trim() === '' && numOfResults === 0) {
     return null;
   }
   
