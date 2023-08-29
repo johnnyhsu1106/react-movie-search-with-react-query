@@ -1,11 +1,21 @@
+import Container from './components/Container/Container';
+import SearchBar from './components/SearchBar/SearchBar';
+import SearchResults from './components/SearchResults/SearchResults';
+import Pagination from './components/Pagination/Pagination';
+
+import { MovieSearchProvider } from './context/MovieSearchContext.jsx'
 import './App.css'
 
-function App() {
-  return (
-    <>
-      <h1>hello world</h1>
-    </>
-  )
-}
 
-export default App
+const App = () => {
+  return (
+    <MovieSearchProvider>
+      <Container>
+        <SearchBar />
+        <Pagination />
+        <SearchResults />
+      </Container>
+    </MovieSearchProvider>
+  );
+}
+export default App;
