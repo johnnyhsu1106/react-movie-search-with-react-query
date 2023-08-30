@@ -25,11 +25,7 @@ const MovieSearchProvider = ({ children }) => {
   const numOfResults = data?.total_results;
   const movies = data?.results?.map((result) => { return result }) || [];
   const currBucket = currPageNum !== null ? Math.floor((currPageNum - 1) / PAGE_PER_BUCKET) : null;
-  const lastBucket = numOfPages !== 0 ? Math.floor((numOfPages - 1) / PAGE_PER_BUCKET) : null;
-
-  useEffect(() => {
-    console.log(query);
-  }, [query])
+  const lastBucket = numOfPages !== undefined ? Math.floor((numOfPages - 1) / PAGE_PER_BUCKET) : null;
 
   const handlePrevQueryCancel = () => {
     queryClient.cancelQueries({ queryKey: ['movies'] })
