@@ -1,7 +1,7 @@
 ### Getting Started
 This is a Movie Search Tool built based on React.
 
-Link: https://react-movie-search-by-johnny.web.app/
+App: https://react-movie-search-w-rq-by-yh.web.app/
 
 Checkout this repo, install dependencies, then start the gulp process with the following:
 ```
