@@ -1,6 +1,6 @@
-import { useState, createContext, useContext, useMemo, useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchMovieData } from '../utils/fetchMovies';
+import { useState, createContext, useContext, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import fetchMovieData  from '../utils/fetchMovies';
 
 const PAGE_PER_BUCKET = 10;
 const MovieSearchContext = createContext({});
@@ -11,8 +11,6 @@ const useMovieSearchContext = () => {
 
 
 const MovieSearchProvider = ({ children }) => {
-  const queryClient = useQueryClient();
-
   const [query, setQuery] = useState('');
   const [currPageNum, setCurrPageNum] = useState(null);
 
@@ -27,18 +25,12 @@ const MovieSearchProvider = ({ children }) => {
   const currBucket = currPageNum !== null ? Math.floor((currPageNum - 1) / PAGE_PER_BUCKET) : null;
   const lastBucket = numOfPages !== undefined ? Math.floor((numOfPages - 1) / PAGE_PER_BUCKET) : null;
 
-  const handlePrevQueryCancel = () => {
-    queryClient.cancelQueries({ queryKey: ['movies'] })
-  };
-
   const handleSearchQuery = (query) => {
-    handlePrevQueryCancel();
     setQuery(query);
     setCurrPageNum(1);
   };
 
   const handlePageNumClick = (pageNum) => {
-    handlePrevQueryCancel();
     setCurrPageNum(pageNum);
   };
 
