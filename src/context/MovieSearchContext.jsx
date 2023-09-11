@@ -16,7 +16,7 @@ const MovieSearchProvider = ({ children }) => {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['movies', query, currPageNum],
-    queryFn: async () => { return fetchMovieData(query, currPageNum)}
+    queryFn: () => { return fetchMovieData(query, currPageNum)}
   });
 
   const numOfPages = data?.total_pages;
