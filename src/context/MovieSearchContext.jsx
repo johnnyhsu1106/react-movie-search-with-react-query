@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useMemo } from 'react';
+import { useState, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import fetchMovieData  from '../utils/fetchMovies';
 
