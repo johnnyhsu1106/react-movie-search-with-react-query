@@ -13,9 +13,18 @@ const fetchMovieData = async (query, currPageNum) => {
   if (query === '' || currPageNum === null) {
     return {};
   }
-  const res = await fetch(`${API_ENDPOINT}?query=${query}&page=${currPageNum}`, OPTIONS);
+  try {
+    const res = await fetch(`${API_ENDPOINT}?query=${query}&page=${currPageNum}`, OPTIONS);
+    if (!res.ok) {
+      throw new Error('Invalid HTTP Request');
+    }
+    return res.json();
+    
+  } catch (error) {
+    console.error(error);
+  }
   
-  return res.json();
+
 }
 
 export default fetchMovieData;
